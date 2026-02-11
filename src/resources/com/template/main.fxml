@@ -1,14 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.template.MainController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="600.0" prefWidth="900.0" stylesheets="@/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.template.MainController">
+   <children>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <AnchorPane prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #005894;" stylesheets="@../../style.css" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox layoutX="66.0" layoutY="-4.0" prefHeight="60.0" prefWidth="780.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Button fx:id="button" mnemonicParsing="false" prefHeight="60.0" prefWidth="130.0" style="-fx-background-color: transparent;" text="Dashboard" textFill="#f2f2f2">
+                           <font>
+                              <Font name="Segoe UI" size="14.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../Images/Home.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="button" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="130.0" style="-fx-background-color: transparent;" text="Friends" textFill="#f2f2f2">
+                           <font>
+                              <Font name="Segoe UI" size="14.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../Images/People.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="140.0" layoutY="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="130.0" style="-fx-background-color: transparent;" text="LdrBoard" textFill="#f2f2f2">
+                           <font>
+                              <Font name="Segoe UI" size="14.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../Images/Leaderboard.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="271.0" layoutY="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="130.0" style="-fx-background-color: transparent;" text="Settings" textFill="#f2f2f2">
+                           <font>
+                              <Font name="Segoe UI" size="14.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../Images/Settings.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="401.0" layoutY="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="130.0" style="-fx-background-color: transparent;" text="MyStats" textFill="#f2f2f2">
+                           <font>
+                              <Font name="Segoe UI" size="14.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../Images/Statistics.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="532.0" layoutY="10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="130.0" style="-fx-background-color: transparent;" text="About" textFill="#f2f2f2">
+                           <font>
+                              <Font name="Segoe UI" size="14.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="27.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../Images/About.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="40.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="12.0">
+                     <image>
+                        <Image url="@../../Images/typing_17816535.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </top>
+         <center>
+            <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@../../Images/bg.jpg" />
+               </image>
+            </ImageView>
+         </center>
+      </BorderPane>
+   </children>
 </AnchorPane>

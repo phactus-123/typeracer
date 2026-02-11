@@ -10,10 +10,13 @@ public class Main extends Application
     @Override
     public void start(Stage stage) throws Exception
     {
-        FXMLLoader loader = new FXMLLoader(Main.class.getResource("main.fxml"));
-        Scene scene = new Scene(loader.load(),600,400);
 
-        stage.setTitle("Hello");
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource("main.fxml"));
+        Scene scene = new Scene(loader.load(),900,600);
+        scene.getStylesheets().add(
+                getClass().getResource("/style.css").toExternalForm()
+        );
+        stage.setTitle("TypeRacer");
         stage.setScene(scene);
         stage.show();
     }
