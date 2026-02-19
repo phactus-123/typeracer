@@ -16,6 +16,7 @@ public class Main extends Application
         scene.getStylesheets().add(
                 getClass().getResource("/style.css").toExternalForm()
         );
+
         stage.setTitle("TypeRacer");
         stage.setScene(scene);
         stage.show();

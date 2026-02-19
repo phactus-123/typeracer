@@ -9,5 +9,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="javafx.base" level="application" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>
