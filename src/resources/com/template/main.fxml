@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -8,6 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
 
 <AnchorPane prefHeight="600.0" prefWidth="900.0" stylesheets="@/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.template.MainController">
    <children>
@@ -107,23 +110,87 @@
             </ImageView>
          </center>
       </BorderPane>
-      <Pane prefHeight="600.0" prefWidth="900.0">
+      <Pane fx:id="startupPane" prefHeight="660.0" prefWidth="900.0">
          <children>
-            <ImageView fitHeight="430.0" fitWidth="600.0" layoutX="175.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="WelcomeText" fitHeight="430.0" fitWidth="600.0" layoutX="175.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../Images/Untitled-1.png" />
                </image>
             </ImageView>
-            <Button fx:id="logInButton" defaultButton="true" layoutX="493.0" layoutY="330.0" mnemonicParsing="false" onAction="#handleUser" prefHeight="60.0" prefWidth="140.0" style="-fx-background-color: #4A90E2;" text="LOG IN" textFill="WHITE">
+            <Button fx:id="logInButton" defaultButton="true" layoutX="493.0" layoutY="330.0" mnemonicParsing="false" onAction="#handleUser" prefHeight="60.0" prefWidth="140.0" style="-fx-background-color: #0090FF;" text="LOG IN" textFill="WHITE">
                <font>
                   <Font name="Arial Unicode MS" size="20.0" />
                </font>
             </Button>
-            <Button fx:id="signUpButton" layoutX="243.0" layoutY="330.0" mnemonicParsing="false" onAction="#handleUser" prefHeight="60.0" prefWidth="140.0" style="-fx-background-color: #4A90E2;" text="SIGN UP" textFill="WHITE">
+            <Button fx:id="signUpButton" layoutX="243.0" layoutY="330.0" mnemonicParsing="false" onAction="#handleUser" prefHeight="60.0" prefWidth="140.0" style="-fx-background-color: #0090FF;" text="SIGN UP" textFill="WHITE">
                <font>
                   <Font name="Arial Unicode MS" size="20.0" />
                </font>
             </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="usernamePane" prefHeight="375.0" prefWidth="634.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="250.0">
+         <children>
+            <ImageView fitHeight="413.0" fitWidth="513.0" layoutX="-62.0" layoutY="-113.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Images/username.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="race1" layoutX="522.0" layoutY="335.0" mnemonicParsing="false" onAction="#actionButton" prefHeight="40.0" prefWidth="98.0" style="-fx-background-color: #F68D1F;" text="LOGOUT" textFill="WHITE">
+               <font>
+                  <Font name="Cascadia Code Regular" size="16.0" />
+               </font>
+            </Button>
+            <Label fx:id="username" layoutX="136.0" layoutY="14.0" prefWidth="128.0" text="&lt;USERNAME&gt;">
+               <font>
+                  <Font name="Cascadia Code Regular" size="21.0" />
+               </font>
+            </Label>
+            <Label fx:id="wpm" layoutX="72.0" layoutY="69.0" prefWidth="128.0" text="WPM: ">
+               <font>
+                  <Font name="Cascadia Code Regular" size="21.0" />
+               </font>
+            </Label>
+            <Label fx:id="accuracy" layoutX="72.0" layoutY="105.0" prefHeight="25.0" prefWidth="220.0" text="Accuarcy: ">
+               <font>
+                  <Font name="Cascadia Code Regular" size="21.0" />
+               </font>
+            </Label>
+            <Button fx:id="test" layoutX="44.0" layoutY="175.0" mnemonicParsing="false" onAction="#actionButton" prefHeight="50.0" prefWidth="130.0" style="-fx-background-color: #0090FF;" text="TEST" textFill="WHITE">
+               <font>
+                  <Font name="Cascadia Code Regular" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="race" layoutX="216.0" layoutY="175.0" mnemonicParsing="false" onAction="#actionButton" prefHeight="50.0" prefWidth="130.0" style="-fx-background-color: #0090FF;" text="RACE" textFill="WHITE">
+               <font>
+                  <Font name="Cascadia Code Regular" size="20.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="typingPane" prefHeight="660.0" prefWidth="900.0">
+         <children>
+            <ImageView fitHeight="945.0" fitWidth="1147.0" layoutX="-130.0" layoutY="-102.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Images/typingBlock.png" />
+               </image>
+            </ImageView>
+            <TextFlow fx:id="typingBlock" layoutX="85.0" layoutY="184.0" prefHeight="209.0" prefWidth="741.0" />
+            <Button fx:id="stopButton" layoutX="411.0" layoutY="567.0" mnemonicParsing="false" onAction="#actionButton" prefHeight="50.0" prefWidth="89.0" style="-fx-background-color: #0090FF;" text="STOP" textFill="WHITE">
+               <font>
+                  <Font name="Yu Gothic UI Semibold" size="17.0" />
+               </font>
+            </Button>
+            <TextArea fx:id="currentWord" layoutX="374.0" layoutY="490.0" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="163.0">
+               <font>
+                  <Font name="Segoe UI" size="21.0" />
+               </font>
+            </TextArea>
+            <Label fx:id="wpmLabel" layoutX="403.0" layoutY="416.0" prefHeight="67.0" prefWidth="106.0" text="WPM: " textFill="#ffea08">
+               <font>
+                  <Font name="Cascadia Code Regular" size="25.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

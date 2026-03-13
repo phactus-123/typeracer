@@ -1,0 +1,5 @@
+hello 4 40 90
+ANIK 3 50 40
+anik 48 53 10.08
+farreed 6 40 99
+hi 0 0 0

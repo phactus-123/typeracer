@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
-
+import javafx.scene.Node;
 
 
 public class LoginController {
@@ -43,13 +43,18 @@ public class LoginController {
     @FXML
     private Button createButton;
 
+
+
     private boolean isExist(String username) {
         try {
             File file = new File("src/resources/db.txt");
             Scanner sc = new Scanner(file);
             boolean isFound = false;
-            while (sc.hasNextLine()) {
-                String ln = sc.nextLine();
+            while (sc.hasNext()) {
+                String ln = sc.next();
+                MainController.testCount = sc.nextInt();
+                MainController.avgWpm = sc.nextInt();
+                MainController.avgAccuracy = sc.nextDouble();
                 if (ln.equals(username)) {
                     return true;
                 }
@@ -60,13 +65,15 @@ public class LoginController {
         return false;
     }
 
+
+
     @FXML
     public void getUserInfo(ActionEvent event) {
         Button current_button = (Button) event.getSource();
         if (current_button == enter) {
             String user = username.getText();
             System.out.println(user);
-            if (!isExist(user) || user.equals("")) {
+            if (!isExist(user) || user.trim().equals("")) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Login failed!");
                 alert.setContentText("Invalid username. Try signing up instead!");
@@ -76,7 +83,7 @@ public class LoginController {
                 System.out.println("Login success!");
                 Main.AppState.isLoggedIn = true;
                 Main.AppState.currentUser = user;
-                Main main = new Main();
+                Main.switchScene("Main.fxml", event);
             }
 
         }
@@ -95,28 +102,21 @@ public class LoginController {
             else {
                 try {
                     FileWriter writer = new FileWriter("src/resources/db.txt", true);
-                    writer.write(newUser + "\n");
+                    writer.write(newUser + " " +0 + " " + 0 +" " + 0+ "\n");
                     writer.close();
                     Main.AppState.currentUser = newUser;
                     Main.AppState.isLoggedIn = true;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                Main.switchScene("Main.fxml", event);
+                System.out.println("Sign up success!");
             }
         }
 
         if (current_button == backButton) {
             try {
-                FXMLLoader loader = new FXMLLoader(Main.class.getResource("main.fxml"));
-                Parent root = loader.load();
-
-                // Get current stage
-                Stage stage = (Stage) backButton.getScene().getWindow();
-
-                // Set new scene
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
+                Main.switchScene("Main.fxml", event);
             } catch (Exception e) {
                 e.printStackTrace();
                 System.out.println("Could not find or load main.fxml");
