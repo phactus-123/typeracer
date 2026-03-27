@@ -201,6 +201,9 @@ public class MainController
     }
 
     private void startTest() {
+        Font cascadia = Font.loadFont(
+                getClass().getResourceAsStream("/resources/fonts/CascadiaCode.ttf"), 21
+        );
         Main.AppState.testOn = true;
         togglePane(usernamePane);
         System.out.println("test mode is on!");
@@ -211,7 +214,9 @@ public class MainController
         contents = getParagraph().split(" ");
         for (String word : contents) {
             Text t = new Text(word + " ");
-            t.setFont(Font.font("Cascadia Code", 21));
+            t.setFont(Font.loadFont(
+                    getClass().getResourceAsStream("/resources/fonts/CascadiaCode.ttf"), 21
+            ));
             typingBlock.getChildren().add(t);
             totalWordCount++;
         }
@@ -369,6 +374,10 @@ public class MainController
             finishTest();
             System.out.println("WPM " + wpm());
             System.out.println("Accuracy " + accuracy());
+        }
+
+        if (current_Button == race) {
+            Main.switchScene("Race.fxml", event);
         }
     }
 

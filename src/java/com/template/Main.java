@@ -44,6 +44,11 @@ public class Main extends Application
         public static boolean isLoggedIn = false;
         public static boolean testOn = false;
         public static String currentUser = null;
+
+
+        public static boolean isHost = false;
+        public static GameServer server = null;
+        public static GameClient client = null;
     }
 
     public static void main(String[] args)

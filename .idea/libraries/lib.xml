@@ -4,7 +4,10 @@
       <root url="file://$PROJECT_DIR$/../../drive-download-20260208T081705Z-1-001/openjfx-21.0.5_windows-x64_bin-sdk/javafx-sdk-21.0.5/lib" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../../drive-download-20260208T081705Z-1-001/openjfx-21.0.5_windows-x64_bin-sdk/javafx-sdk-21.0.5" />
+    </SOURCES>
     <jarDirectory url="file://$PROJECT_DIR$/../../drive-download-20260208T081705Z-1-001/openjfx-21.0.5_windows-x64_bin-sdk/javafx-sdk-21.0.5/lib" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../drive-download-20260208T081705Z-1-001/openjfx-21.0.5_windows-x64_bin-sdk/javafx-sdk-21.0.5" recursive="false" type="SOURCES" />
   </library>
 </component>
