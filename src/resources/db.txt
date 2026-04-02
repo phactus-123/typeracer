@@ -1,6 +1,6 @@
 hello 4 40 90
 ANIK 3 50 40
-anik 48 53 10.08
+anik 58 43 8.35
 farreed 6 40 99
 hi 0 0 0
 abc 4 0 0.00

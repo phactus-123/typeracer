@@ -1,11 +1,7 @@
 package com.template;
 
-
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -44,21 +40,29 @@ public class LoginController {
     private Button createButton;
 
 
-
+    /**
+     * Checks whether the username exists in db.txt and — if found — loads
+     * that user's stats into the static MainController fields.
+     */
     private boolean isExist(String username) {
         try {
             File file = new File("src/resources/db.txt");
             Scanner sc = new Scanner(file);
-            boolean isFound = false;
             while (sc.hasNext()) {
                 String ln = sc.next();
-                MainController.testCount = sc.nextInt();
-                MainController.avgWpm = sc.nextInt();
-                MainController.avgAccuracy = sc.nextDouble();
+                int    testCount   = sc.nextInt();
+                int    avgWpm      = sc.nextInt();
+                double avgAccuracy = sc.nextDouble();
                 if (ln.equals(username)) {
+                    // Only assign stats when we actually found the right user
+                    MainController.testCount   = testCount;
+                    MainController.avgWpm      = avgWpm;
+                    MainController.avgAccuracy = avgAccuracy;
+                    sc.close();
                     return true;
                 }
             }
+            sc.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -66,64 +70,58 @@ public class LoginController {
     }
 
 
-
     @FXML
     public void getUserInfo(ActionEvent event) {
         Button current_button = (Button) event.getSource();
+
+        // ── Login ────────────────────────────────────────────────────────────
         if (current_button == enter) {
-            String user = username.getText();
-            System.out.println(user);
-            if (!isExist(user) || user.trim().equals("")) {
+            String user = username.getText().trim();
+            if (user.isEmpty() || !isExist(user)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Login failed!");
                 alert.setContentText("Invalid username. Try signing up instead!");
                 alert.showAndWait();
-            }
-            else {
+            } else {
                 System.out.println("Login success!");
-                Main.AppState.isLoggedIn = true;
+                Main.AppState.isLoggedIn  = true;
                 Main.AppState.currentUser = user;
-                Main.switchScene("Main.fxml", event);
+                Main.switchScene("main.fxml", event);
             }
-
         }
 
+        // ── Sign Up ──────────────────────────────────────────────────────────
         if (current_button == createButton) {
-            String newUser = username.getText();
+            String newUser = username.getText().trim();
 
-            if(isExist(newUser) || newUser.equals("")) {
-                System.out.println("Username already exists!");
+            if (newUser.isEmpty() || isExist(newUser)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Sign Up failed!");
                 alert.setContentText("Username already exists! Try login instead.");
                 alert.showAndWait();
-
-            }
-            else {
+            } else {
                 try {
                     FileWriter writer = new FileWriter("src/resources/db.txt", true);
-                    writer.write(newUser + " " +0 + " " + 0 +" " + 0+ "\n");
+                    writer.write(newUser + " " + 0 + " " + 0 + " " + 0 + "\n");
                     writer.close();
-                    Main.AppState.currentUser = newUser;
-                    Main.AppState.isLoggedIn = true;
+                    Main.AppState.currentUser  = newUser;
+                    Main.AppState.isLoggedIn   = true;
+                    // Reset stats for a brand-new user
+                    MainController.testCount   = 0;
+                    MainController.avgWpm      = 0;
+                    MainController.avgAccuracy = 0.0;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Main.switchScene("Main.fxml", event);
+                Main.switchScene("main.fxml", event);
                 System.out.println("Sign up success!");
             }
         }
 
+        // ── FIX #2: Back button — was "Main.fxml" (capital M) which fails on
+        //    case-sensitive file systems. Corrected to "main.fxml".
         if (current_button == backButton) {
-            try {
-                Main.switchScene("Main.fxml", event);
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("Could not find or load main.fxml");
-            }
+            Main.switchScene("main.fxml", event);
         }
-
     }
-
 }
-
