@@ -33,6 +33,7 @@
                           -fx-font-weight: bold; -fx-font-family: 'Segoe UI';"/>
 
             <TextField fx:id="username"
+                       onAction="#getUserInfo"
                        promptText="username…"
                        prefHeight="42.0" prefWidth="300.0"
                        style="-fx-control-inner-background: #313244;

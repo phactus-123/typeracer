@@ -59,6 +59,7 @@ public class MainController
     @FXML private Button myStatsButton;
     @FXML private Button aboutButton;
     @FXML private Button logoutButton;
+    @FXML private Button exitButton;
 
     @FXML private Pane leaderboardPane;
 
@@ -173,6 +174,11 @@ public class MainController
         wpm.setFont(Main.monoFont(16));
         accuracy.setFont(Main.monoFont(16));
         wpmLabel.setFont(Main.monoFont(FontWeight.BOLD, 24));
+    }
+
+    @FXML
+    public void handleExit(ActionEvent event) {
+        Platform.exit();
     }
 
     @FXML
@@ -382,7 +388,7 @@ public class MainController
         currentWord.setDisable(false);
         currentWord.setEditable(true);
 
-        contents = getParagraph().split(" ");
+        contents = getParagraph().trim().split("\\s+");
         for (String word : contents) {
             Text t = new Text(word + " ");
             t.setFont(Font.font("Monospace", 18));

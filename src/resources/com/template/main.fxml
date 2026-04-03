@@ -89,6 +89,21 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
+                  <Button fx:id="exitButton" mnemonicParsing="false" onAction="#handleExit" prefHeight="85.0" prefWidth="160.0" styleClass="nav-button" text="Exit">
+                     <graphic>
+                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Images/Close%20Window.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Yu Gothic UI Regular" size="30.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
 
                </children>
             </HBox>

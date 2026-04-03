@@ -65,9 +65,14 @@ public class LoginController {
 
     @FXML
     public void getUserInfo(ActionEvent event) {
-        Button current_button = (Button) event.getSource();
+        // If Enter was pressed inside the TextField, treat it as the primary button
+        // for the current scene: "enter" (Login) or "createButton" (Sign Up).
+        Object source = event.getSource();
+        if (source == username) {
+            source = (enter != null) ? enter : createButton;
+        }
 
-        if (current_button == enter) {
+        if (source == enter) {
             String user = username.getText().trim();
             if (user.isEmpty() || !isExist(user)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -82,7 +87,7 @@ public class LoginController {
             }
         }
 
-        if (current_button == createButton) {
+        if (source == createButton) {
             String newUser = username.getText().trim();
 
             if (newUser.isEmpty() || isExist(newUser)) {
@@ -109,7 +114,7 @@ public class LoginController {
             }
         }
 
-        if (current_button == backButton) {
+        if (source == backButton) {
             Main.switchScene("main.fxml", event);
         }
     }
