@@ -25,7 +25,6 @@ public class GameClient {
         in  = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         running = true;
 
-        // Background thread continuously reads incoming server messages
         Thread t = new Thread(() -> {
             try {
                 String line;

@@ -10,7 +10,6 @@
            prefWidth="860" prefHeight="620"
            style="-fx-background-color: #1e1e2e;">
 
-    <!-- ══════════════ LOBBY PANE ══════════════ -->
     <VBox fx:id="lobbyPane"
           alignment="CENTER" spacing="20"
           style="-fx-padding: 40;">
@@ -44,19 +43,16 @@
                        -fx-font-size: 13px; -fx-background-radius: 6; -fx-padding: 6 16;"/>
     </VBox>
 
-    <!-- ══════════════ RACE PANE ══════════════ -->
     <VBox fx:id="racePane"
           spacing="12"
           style="-fx-padding: 24;">
 
-        <!-- Countdown overlay -->
         <StackPane>
             <Label fx:id="countdownLabel" text="3"
                    style="-fx-font-size: 72px; -fx-font-weight: bold;
                           -fx-text-fill: #f38ba8; -fx-effect: dropshadow(gaussian,#f38ba8,20,0,0,0);"/>
         </StackPane>
 
-        <!-- ── YOU ── -->
         <VBox spacing="4" style="-fx-background-color: #313244; -fx-padding: 10; -fx-background-radius: 8;">
             <HBox alignment="CENTER_LEFT" spacing="12">
                 <Label fx:id="myProgressLabel" text="You: 0%"
@@ -69,7 +65,6 @@
                          style="-fx-accent: #89b4fa;"/>
         </VBox>
 
-        <!-- ── OPPONENT ── -->
         <VBox spacing="4" style="-fx-background-color: #313244; -fx-padding: 10; -fx-background-radius: 8;">
             <HBox alignment="CENTER_LEFT" spacing="12">
                 <Label fx:id="opponentProgressLabel" text="Opponent: 0%"
@@ -82,14 +77,12 @@
                          style="-fx-accent: #f38ba8;"/>
         </VBox>
 
-        <!-- ── PARAGRAPH ── -->
         <ScrollPane fitToWidth="true" prefHeight="140"
                     style="-fx-background: #181825; -fx-background-color: #181825; -fx-background-radius: 8;">
             <TextFlow fx:id="typingBlock"
                       style="-fx-padding: 12; -fx-line-spacing: 4;"/>
         </ScrollPane>
 
-        <!-- ── INPUT ── -->
         <TextArea fx:id="inputField"
                   promptText="Start typing here..."
                   prefHeight="60"
@@ -98,7 +91,6 @@
                          -fx-font-size: 16px; -fx-background-radius: 8; -fx-font-family: monospace;
                          -fx-border-color: #585b70; -fx-border-radius: 8;"/>
 
-        <!-- ── RESULT ── -->
         <Label fx:id="resultLabel" text=""
                wrapText="true"
                style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #a6e3a1;"/>

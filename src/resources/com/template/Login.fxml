@@ -17,7 +17,6 @@
             fx:controller="com.template.LoginController">
    <children>
 
-      <!-- Centred card -->
       <VBox alignment="CENTER" spacing="20.0"
             prefWidth="380.0" prefHeight="280.0"
             layoutX="260.0" layoutY="160.0"
@@ -29,12 +28,10 @@
                    -fx-padding: 40 32 40 32;">
          <children>
 
-            <!-- Title -->
             <Label text="Enter your username"
                    style="-fx-text-fill: #cdd6f4; -fx-font-size: 22px;
                           -fx-font-weight: bold; -fx-font-family: 'Segoe UI';"/>
 
-            <!-- Input -->
             <TextField fx:id="username"
                        promptText="username…"
                        prefHeight="42.0" prefWidth="300.0"
@@ -49,7 +46,6 @@
                <font><Font name="Segoe UI" size="15.0"/></font>
             </TextField>
 
-            <!-- ENTER button -->
             <Button fx:id="enter"
                     mnemonicParsing="false" onAction="#getUserInfo"
                     prefHeight="46.0" prefWidth="300.0" text="ENTER"
@@ -60,7 +56,6 @@
          </children>
       </VBox>
 
-      <!-- Back button — bottom-left -->
       <Button fx:id="backButton"
               layoutX="32.0" layoutY="548.0"
               mnemonicParsing="false" onAction="#getUserInfo"

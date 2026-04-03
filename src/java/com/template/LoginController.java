@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Node;
 
-
 public class LoginController {
 
     @FXML
@@ -39,11 +38,6 @@ public class LoginController {
     @FXML
     private Button createButton;
 
-
-    /**
-     * Checks whether the username exists in db.txt and — if found — loads
-     * that user's stats into the static MainController fields.
-     */
     private boolean isExist(String username) {
         try {
             File file = new File("src/resources/db.txt");
@@ -54,7 +48,7 @@ public class LoginController {
                 int    avgWpm      = sc.nextInt();
                 double avgAccuracy = sc.nextDouble();
                 if (ln.equals(username)) {
-                    // Only assign stats when we actually found the right user
+
                     MainController.testCount   = testCount;
                     MainController.avgWpm      = avgWpm;
                     MainController.avgAccuracy = avgAccuracy;
@@ -69,12 +63,10 @@ public class LoginController {
         return false;
     }
 
-
     @FXML
     public void getUserInfo(ActionEvent event) {
         Button current_button = (Button) event.getSource();
 
-        // ── Login ────────────────────────────────────────────────────────────
         if (current_button == enter) {
             String user = username.getText().trim();
             if (user.isEmpty() || !isExist(user)) {
@@ -90,7 +82,6 @@ public class LoginController {
             }
         }
 
-        // ── Sign Up ──────────────────────────────────────────────────────────
         if (current_button == createButton) {
             String newUser = username.getText().trim();
 
@@ -106,7 +97,7 @@ public class LoginController {
                     writer.close();
                     Main.AppState.currentUser  = newUser;
                     Main.AppState.isLoggedIn   = true;
-                    // Reset stats for a brand-new user
+
                     MainController.testCount   = 0;
                     MainController.avgWpm      = 0;
                     MainController.avgAccuracy = 0.0;
@@ -118,8 +109,6 @@ public class LoginController {
             }
         }
 
-        // ── FIX #2: Back button — was "Main.fxml" (capital M) which fails on
-        //    case-sensitive file systems. Corrected to "main.fxml".
         if (current_button == backButton) {
             Main.switchScene("main.fxml", event);
         }

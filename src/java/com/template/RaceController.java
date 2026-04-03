@@ -15,17 +15,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Random;
 
-
 public class RaceController {
 
-    // ── Lobby pane ──────────────────────────────────────────────────────────
     @FXML private VBox   lobbyPane;
     @FXML private Button hostButton;
     @FXML private Button joinButton;
     @FXML private Button backButton;
     @FXML private Label  statusLabel;
 
-    // ── Race pane ────────────────────────────────────────────────────────────
     @FXML private VBox      racePane;
     @FXML private TextFlow  typingBlock;
     @FXML private TextArea  inputField;
@@ -38,7 +35,6 @@ public class RaceController {
     @FXML private Label     countdownLabel;
     @FXML private Label     resultLabel;
 
-    // ── State ────────────────────────────────────────────────────────────────
     private String[]  words;
     private int       wordIndex      = 0;
     private int       totalWords     = 0;
@@ -54,9 +50,6 @@ public class RaceController {
 
     private static final int PORT = 5000;
 
-    // ────────────────────────────────────────────────────────────────────────
-    //  Initialise
-    // ────────────────────────────────────────────────────────────────────────
     @FXML
     public void initialize() {
         racePane.setVisible(false);
@@ -67,16 +60,23 @@ public class RaceController {
 
         inputField.textProperty().addListener((obs, oldText, newText) -> {
             if (!raceStarted || raceFinished) return;
-            if (newText.endsWith(" ")) {
-                handleWordSubmit(newText.trim());
-                Platform.runLater(() -> inputField.clear());
+            if (newText.endsWith(" ") && !oldText.endsWith(" ")) {
+                String typedWord = newText.trim();
+                if (typedWord.isEmpty()) {
+                    Platform.runLater(inputField::clear);
+                    return;
+                }
+
+                boolean accepted = handleWordSubmit(typedWord);
+                Platform.runLater(() -> {
+                    if (accepted) {
+                        inputField.clear();
+                    }
+                });
             }
         });
     }
 
-    // ────────────────────────────────────────────────────────────────────────
-    //  Lobby buttons
-    // ────────────────────────────────────────────────────────────────────────
     @FXML
     public void handleHost(ActionEvent event) {
         statusLabel.setText("Waiting for opponent to join...");
@@ -129,17 +129,12 @@ public class RaceController {
         }).start();
     }
 
-    // ── FIX #2: Back button was navigating to "Main.fxml" (capital M) but the
-    //    actual resource file is "main.fxml". Fixed to lowercase to match.
     @FXML
     public void handleBack(ActionEvent event) {
         cleanup();
         Main.switchScene("main.fxml", event);
     }
 
-    // ────────────────────────────────────────────────────────────────────────
-    //  Networking helpers
-    // ────────────────────────────────────────────────────────────────────────
     private void connectAsClient(String ip) throws IOException {
         GameClient client = new GameClient();
         Main.AppState.client = client;
@@ -170,7 +165,6 @@ public class RaceController {
             }
 
         } else if (msg.startsWith("PROGRESS:")) {
-            // PROGRESS:<user>:<wordsTyped>:<totalWords>:<wpm>
             String[] parts = msg.split(":");
             if (parts.length >= 5 && !parts[1].equals(Main.AppState.currentUser)) {
                 int typed     = Integer.parseInt(parts[2]);
@@ -180,8 +174,6 @@ public class RaceController {
                 Platform.runLater(() -> {
                     opponentProgressBar.setProgress(pct);
                     opponentProgressLabel.setText(opponentName + ": " + (int)(pct * 100) + "%");
-                    // ── FIX #1: opponent WPM label is now updated every second
-                    //    because we broadcast PROGRESS from the timer, not just on word submit.
                     opponentWpmLabel.setText("WPM: " + theirWpm);
                 });
             }
@@ -191,16 +183,12 @@ public class RaceController {
             String who = parts[1];
             int    wpm = Integer.parseInt(parts[2]);
 
-            if (!who.equals(Main.AppState.currentUser) && !resultShown) {
-                resultShown = true;
-                Platform.runLater(() -> showResult(false, who, wpm));
+            if (!who.equals(Main.AppState.currentUser)) {
+                Platform.runLater(() -> handleOpponentFinish(who, wpm));
             }
         }
     }
 
-    // ────────────────────────────────────────────────────────────────────────
-    //  Race setup
-    // ────────────────────────────────────────────────────────────────────────
     private void setupRace(String paragraph) {
         words      = paragraph.split(" ");
         totalWords = words.length;
@@ -251,11 +239,9 @@ public class RaceController {
         cd.play();
     }
 
-    // ────────────────────────────────────────────────────────────────────────
-    //  Typing logic
-    // ────────────────────────────────────────────────────────────────────────
-    private void handleWordSubmit(String typed) {
-        if (wordIndex >= totalWords) return;
+    private boolean handleWordSubmit(String typed) {
+        if (wordIndex >= totalWords) return false;
+        if (typed.isEmpty()) return false;
 
         totalChars += typed.length() + 1;
         boolean correct = typed.equals(words[wordIndex]);
@@ -265,36 +251,50 @@ public class RaceController {
         current.setUnderline(false);
 
         if (correct) correctChars += typed.length() + 1;
-
         if (correct) wordIndex++;
 
         double progress = (double) wordIndex / totalWords;
         myProgressBar.setProgress(progress);
         myProgressLabel.setText(Main.AppState.currentUser + ": " + (int)(progress * 100) + "%");
 
-        // Broadcast on each word submission as well (belt + suspenders)
         broadcastProgress();
 
         if (wordIndex >= totalWords) {
             finishRace();
-            return;
+            return true;
         }
 
         highlightCurrent();
+        return correct;
     }
 
     private void finishRace() {
+        int finalWpm = calcWpm();
+        sendProgress(wordIndex, totalWords, finalWpm, true);
         raceFinished = true;
         inputField.setDisable(true);
         stopWpmTimer();
+        myProgressBar.setProgress(1.0);
+        myProgressLabel.setText(Main.AppState.currentUser + ": 100%");
+        myWpmLabel.setText("WPM: " + finalWpm);
 
-        int finalWpm = calcWpm();
         if (Main.AppState.client != null) {
             Main.AppState.client.sendMessage("FINISH:" + Main.AppState.currentUser + ":" + finalWpm);
         }
         if (!resultShown) {
             showResult(true, Main.AppState.currentUser, finalWpm);
             resultShown = true;
+        }
+    }
+
+    private void handleOpponentFinish(String finisher, int finalWpm) {
+        opponentProgressBar.setProgress(1.0);
+        opponentProgressLabel.setText(opponentName + ": 100%");
+        opponentWpmLabel.setText("WPM: " + finalWpm);
+
+        if (!resultShown) {
+            resultShown = true;
+            showResult(false, finisher, finalWpm);
         }
     }
 
@@ -309,9 +309,6 @@ public class RaceController {
         }
     }
 
-    // ────────────────────────────────────────────────────────────────────────
-    //  Helpers
-    // ────────────────────────────────────────────────────────────────────────
     private void highlightCurrent() {
         if (wordIndex > 0) {
             Text prev = (Text) typingBlock.getChildren().get(wordIndex - 1);
@@ -329,27 +326,31 @@ public class RaceController {
         return (int) ((correctChars / 5.0) / (elapsed / 60.0));
     }
 
-    // ── FIX #1: Every second we (a) update our own WPM label AND (b) broadcast
-    //    our current progress so the opponent sees a continuously updated WPM,
-    //    not just one that refreshes only on word submission.
     private void startWpmTimer() {
         wpmTimeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
             int currentWpm = calcWpm();
             myWpmLabel.setText("WPM: " + currentWpm);
-            broadcastProgress();
+            sendProgress(wordIndex, totalWords, currentWpm);
         }));
         wpmTimeline.setCycleCount(Timeline.INDEFINITE);
         wpmTimeline.play();
     }
 
-    /** Sends our current progress + live WPM to the server so both players stay in sync. */
     private void broadcastProgress() {
-        if (Main.AppState.client != null && raceStarted && !raceFinished) {
+        sendProgress(wordIndex, totalWords, calcWpm());
+    }
+
+    private void sendProgress(int typedWords, int totalWords, int wpm) {
+        sendProgress(typedWords, totalWords, wpm, false);
+    }
+
+    private void sendProgress(int typedWords, int totalWords, int wpm, boolean allowAfterFinish) {
+        if (Main.AppState.client != null && raceStarted && (allowAfterFinish || !raceFinished)) {
             Main.AppState.client.sendMessage(
                 "PROGRESS:" + Main.AppState.currentUser
-                + ":" + wordIndex
+                + ":" + typedWords
                 + ":" + totalWords
-                + ":" + calcWpm()
+                + ":" + wpm
             );
         }
     }

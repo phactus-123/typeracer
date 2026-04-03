@@ -10,6 +10,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.TextFlow;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.image.ImageView;
 import javafx.application.Platform;
 import javafx.animation.KeyFrame;
@@ -18,17 +19,19 @@ import javafx.util.Duration;
 import javafx.scene.paint.Color;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.FileInputStream;
+import java.io.OutputStreamWriter;
+import java.io.FileOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
-
 public class MainController
 {
-    // ─── Existing FXML fields ──────────────────────────────────────────────────
+
     @FXML public Label label;
 
     @FXML private Button logInButton;
@@ -51,14 +54,12 @@ public class MainController
     @FXML private TextFlow typingBlock;
     @FXML private TextArea currentWord;
 
-    // ─── Nav-bar buttons ───────────────────────────────────────────────────────
     @FXML private Button dashboardButton;
-    @FXML private Button leaderboardButton;   // "LdrBoard" nav button
+    @FXML private Button leaderboardButton;
     @FXML private Button myStatsButton;
     @FXML private Button aboutButton;
     @FXML private Button logoutButton;
 
-    // ─── Leaderboard pane ──────────────────────────────────────────────────────
     @FXML private Pane leaderboardPane;
 
     @FXML private TableView<LeaderboardEntry>       leaderboardTable;
@@ -68,10 +69,8 @@ public class MainController
     @FXML private TableColumn<LeaderboardEntry, String>  accCol;
     @FXML private TableColumn<LeaderboardEntry, Integer> testsCol;
 
-    // ─── My Stats pane ─────────────────────────────────────────────────────────
     @FXML private Pane  myStatsPane;
 
-    // ─── About pane ────────────────────────────────────────────────────────────
     @FXML private Pane  aboutPane;
     @FXML private Label statUsernameLabel;
     @FXML private Label statTestCount;
@@ -82,7 +81,6 @@ public class MainController
     @FXML private Label statLastChars;
     @FXML private Label statHint;
 
-    // ─── App state ────────────────────────────────────────────────────────────
     private static String[] contents;
 
     private int charCount        = 0;
@@ -92,7 +90,6 @@ public class MainController
     public static double avgAccuracy;
     public static int    testCount;
 
-    // last-session snapshot (shown in MyStats)
     private int    lastWpm      = 0;
     private double lastAccuracy = 0.0;
     private int    lastChars    = 0;
@@ -112,21 +109,16 @@ public class MainController
     private Timeline timeline;
     private boolean  testing = false;
 
-
-    // ─────────────────────────────────────────────────────────────────────────
-    //  initialize
-    // ─────────────────────────────────────────────────────────────────────────
     @FXML
     public void initialize() {
+        applyDashboardFonts();
 
-        // ── Configure leaderboard table columns ──────────────────────────────
         rankCol .setCellValueFactory(new PropertyValueFactory<>("rank"));
         nameCol .setCellValueFactory(new PropertyValueFactory<>("name"));
         wpmCol  .setCellValueFactory(new PropertyValueFactory<>("avgWpm"));
         accCol  .setCellValueFactory(new PropertyValueFactory<>("avgAccuracyStr"));
         testsCol.setCellValueFactory(new PropertyValueFactory<>("tests"));
 
-        // ── Initial pane visibility ───────────────────────────────────────────
         username.setText("USER: " + Main.AppState.currentUser);
         togglePane(usernamePane);
         togglePane(typingPane);
@@ -139,9 +131,8 @@ public class MainController
             togglePane(usernamePane);
         }
 
-        // ── Typing listener ───────────────────────────────────────────────────
         currentWord.textProperty().addListener((obs, oldText, newText) -> {
-            if (newText.endsWith(" ")) {
+            if (newText.endsWith(" ") && !oldText.endsWith(" ")) {
 
                 if (!testing) {
                     startTime = System.currentTimeMillis();
@@ -150,41 +141,43 @@ public class MainController
                 }
 
                 String typedWord = newText.trim();
+                if (typedWord.isEmpty()) {
+                    Platform.runLater(currentWord::clear);
+                    return;
+                }
+
                 charCount += typedWord.length() + 1;
 
                 if (typedWord.equals(contents[wordCount])) {
                     setColor();
                     correctCharCount += typedWord.length() + 1;
                     correctWordCount++;
+                    wordCount++;
+                    if (wordCount >= totalWordCount) {
+                        finishTest();
+                        return;
+                    }
+
+                    setUnderline();
+                    Platform.runLater(currentWord::clear);
                 } else {
                     setColor("RED");
                     incorrectWordCount++;
                 }
-
-                wordCount++;
-                if (wordCount >= totalWordCount) {
-                    finishTest();
-                    return;
-                }
-
-                setUnderline();
-                Platform.runLater(() -> currentWord.clear());
             }
         });
     }
 
+    private void applyDashboardFonts() {
+        username.setFont(Main.monoFont(FontWeight.BOLD, 22));
+        wpm.setFont(Main.monoFont(16));
+        accuracy.setFont(Main.monoFont(16));
+        wpmLabel.setFont(Main.monoFont(FontWeight.BOLD, 24));
+    }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    //  Navigation  (nav-bar buttons)
-    // ─────────────────────────────────────────────────────────────────────────
-
-    /**
-     * Handles all four nav-bar buttons.
-     * Wired via onAction="#handleNavigation" in FXML.
-     */
     @FXML
     public void handleNavigation(ActionEvent event) {
-        if (!Main.AppState.isLoggedIn) return;   // silently ignore when logged out
+        if (!Main.AppState.isLoggedIn) return;
 
         Button src = (Button) event.getSource();
 
@@ -202,14 +195,9 @@ public class MainController
         } else if (src == aboutButton) {
             navigateTo(aboutPane);
         }
-        // aboutButton handled above
+
     }
 
-    /**
-     * Hides all content panes and shows only {@code target}.
-     * The typingPane is excluded because its lifecycle is managed by
-     * startTest() / finishTest().
-     */
     private void navigateTo(Pane target) {
         for (Pane p : new Pane[]{ startupPane, usernamePane, leaderboardPane, myStatsPane, aboutPane }) {
             p.setVisible(false);
@@ -219,16 +207,10 @@ public class MainController
         target.setDisable(false);
     }
 
-
-    // ─────────────────────────────────────────────────────────────────────────
-    //  Leaderboard  (inline pane)
-    // ─────────────────────────────────────────────────────────────────────────
-
-    /** Reads db.txt, sorts entries, and populates the inline TableView. */
     private void loadLeaderboardData() {
         List<LeaderboardEntry> entries = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("src/resources/db.txt"))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("src/resources/db.txt"), StandardCharsets.UTF_8))) {
             String line;
             while ((line = br.readLine()) != null) {
                 line = line.trim();
@@ -248,21 +230,18 @@ public class MainController
             return;
         }
 
-        // Sort: avg WPM desc, then accuracy desc as tiebreaker
         entries.sort((a, b) -> {
             if (b.getAvgWpm() != a.getAvgWpm())
-                return Integer.compare(b.getAvgWpm(), a.getAvgWpm());      // WPM descending
-            return Double.compare(b.getAvgAccuracy(), a.getAvgAccuracy()); // Accuracy descending
+                return Integer.compare(b.getAvgWpm(), a.getAvgWpm());
+            return Double.compare(b.getAvgAccuracy(), a.getAvgAccuracy());
         });
 
-        // Assign rank numbers
         for (int i = 0; i < entries.size(); i++) {
             entries.get(i).setRank(i + 1);
         }
 
         leaderboardTable.getItems().setAll(entries);
 
-        // Highlight current user's row
         String currentUser = Main.AppState.currentUser;
         leaderboardTable.setRowFactory(tv -> new TableRow<LeaderboardEntry>() {
             @Override
@@ -281,17 +260,11 @@ public class MainController
         }
     }
 
-
-    // ─────────────────────────────────────────────────────────────────────────
-    //  My Stats  (inline pane)
-    // ─────────────────────────────────────────────────────────────────────────
-
-    /** Populates the MyStats pane from db.txt and the last in-session result. */
     private void loadMyStats() {
         statUsernameLabel.setText("👤  " + Main.AppState.currentUser);
 
         boolean found = false;
-        try (BufferedReader br = new BufferedReader(new FileReader("src/resources/db.txt"))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("src/resources/db.txt"), StandardCharsets.UTF_8))) {
             String line;
             while ((line = br.readLine()) != null) {
                 line = line.trim();
@@ -330,7 +303,6 @@ public class MainController
         }
     }
 
-
     private int wpm() {
         endTime  = System.currentTimeMillis();
         duration = (endTime - startTime) / 1000.0;
@@ -367,7 +339,7 @@ public class MainController
     public String getParagraph() {
         String text;
         try {
-            text = Files.readString(Path.of("src/resources/contents.txt"));
+            text = Files.readString(Path.of("src/resources/contents.txt"), StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -424,7 +396,7 @@ public class MainController
     private void updateDb() {
         try {
             List<String> lines = new ArrayList<>();
-            BufferedReader br   = new BufferedReader(new FileReader("src/resources/db.txt"));
+            BufferedReader br   = new BufferedReader(new InputStreamReader(new FileInputStream("src/resources/db.txt"), StandardCharsets.UTF_8));
             String line;
 
             while ((line = br.readLine()) != null) {
@@ -449,7 +421,7 @@ public class MainController
             }
             br.close();
 
-            FileWriter writer = new FileWriter("src/resources/db.txt");
+            OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream("src/resources/db.txt"), StandardCharsets.UTF_8);
             for (String l : lines) writer.write(l + "\n");
             writer.close();
 
@@ -467,13 +439,11 @@ public class MainController
         testing = false;
         Main.AppState.testOn = false;
 
-        // Always restore panes
         typingPane   .setVisible(false); typingPane   .setDisable(true);
         usernamePane .setVisible(true);  usernamePane .setDisable(false);
         stopTimer();
         currentWord.setDisable(true);
 
-        // Only save / display results if the user actually typed something
         if (charCount > 0) {
             lastWpm      = wpm();
             lastAccuracy = accuracy();
@@ -489,7 +459,6 @@ public class MainController
         resetCounters();
     }
 
-    /** Resets all per-test counters and clears the typing area. */
     private void resetCounters() {
         wpmMeter           = 0;
         accuracyMeter      = 0;
@@ -503,9 +472,8 @@ public class MainController
         currentWord.clear();
     }
 
-    /** Stops any active test, clears session state, and returns to the start screen. */
     private void logout() {
-        // Abort test in progress without saving
+
         if (Main.AppState.testOn) {
             testing              = false;
             Main.AppState.testOn = false;
@@ -515,7 +483,6 @@ public class MainController
             resetCounters();
         }
 
-        // Reset app-level state
         Main.AppState.isLoggedIn  = false;
         Main.AppState.currentUser = "";
         Main.AppState.testOn      = false;
@@ -526,7 +493,6 @@ public class MainController
         lastAccuracy = 0.0;
         lastChars    = 0;
 
-        // Return to the welcome / startup screen
         for (Pane p : new Pane[]{ usernamePane, leaderboardPane, myStatsPane, aboutPane, typingPane }) {
             p.setVisible(false);
             p.setDisable(true);
@@ -535,11 +501,6 @@ public class MainController
         startupPane.setDisable(false);
         wpmLabel.setText("WPM: 0");
     }
-
-
-    // ─────────────────────────────────────────────────────────────────────────
-    //  Button handlers
-    // ─────────────────────────────────────────────────────────────────────────
 
     @FXML
     public void handleUser(ActionEvent actionEvent) {
@@ -563,10 +524,6 @@ public class MainController
         pane.setDisable(!pane.isDisable());
     }
 
-
-    // ─────────────────────────────────────────────────────────────────────────
-    //  Leaderboard data model
-    // ─────────────────────────────────────────────────────────────────────────
     public static class LeaderboardEntry {
         private int    rank;
         private final String name;
