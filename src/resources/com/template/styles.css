@@ -1,0 +1,250 @@
+/* ════════════════════════════════════════════════════════
+   styles.css  –  Typing-Test App  (Catppuccin Mocha palette)
+   ════════════════════════════════════════════════════════ */
+
+/* ── Root / scene defaults ───────────────────────────── */
+.root {
+    -fx-font-smoothing-type: gray;
+}
+
+/* ═══════════════════════════════════════════════════════
+   NAV-BAR BUTTONS
+   ═══════════════════════════════════════════════════════ */
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #a6adc8;
+    -fx-font-size: 13px;
+    -fx-font-family: 'Segoe UI';
+    -fx-graphic-text-gap: 8;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 3 0;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+
+.nav-button:hover {
+    -fx-background-color: #313244;
+    -fx-text-fill: #cdd6f4;
+}
+
+.nav-button:pressed {
+    -fx-background-color: #45475a;
+    -fx-text-fill: #89b4fa;
+}
+
+/* Active / selected nav tab */
+.nav-button-active {
+    -fx-background-color: transparent;
+    -fx-text-fill: #89b4fa;
+    -fx-border-color: transparent transparent #89b4fa transparent;
+    -fx-border-width: 0 0 3 0;
+}
+
+.nav-button-active:hover {
+    -fx-background-color: #1e2030;
+    -fx-text-fill: #89b4fa;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ACTION BUTTONS  –  Green (SIGN UP, RACE)
+   ═══════════════════════════════════════════════════════ */
+.btn-green {
+    -fx-background-color: #a6e3a1;
+    -fx-text-fill: #1e1e2e;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.btn-green:hover {
+    -fx-background-color: #b9f1b4;
+    -fx-effect: dropshadow(gaussian, rgba(166,227,161,0.45), 10, 0.0, 0, 3);
+}
+
+.btn-green:pressed {
+    -fx-scale-x: 0.96;
+    -fx-scale-y: 0.96;
+    -fx-background-color: #94d68f;
+    -fx-effect: null;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ACTION BUTTONS  –  Blue (LOG IN, TEST)
+   ═══════════════════════════════════════════════════════ */
+.btn-blue {
+    -fx-background-color: #89b4fa;
+    -fx-text-fill: #1e1e2e;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.btn-blue:hover {
+    -fx-background-color: #a0c8ff;
+    -fx-effect: dropshadow(gaussian, rgba(137,180,250,0.45), 10, 0.0, 0, 3);
+}
+
+.btn-blue:pressed {
+    -fx-scale-x: 0.96;
+    -fx-scale-y: 0.96;
+    -fx-background-color: #74a8f7;
+    -fx-effect: null;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ACTION BUTTONS  –  Red (LOGOUT, STOP)
+   ═══════════════════════════════════════════════════════ */
+.btn-red {
+    -fx-background-color: #f38ba8;
+    -fx-text-fill: #1e1e2e;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.btn-red:hover {
+    -fx-background-color: #ff9fb8;
+    -fx-effect: dropshadow(gaussian, rgba(243,139,168,0.45), 10, 0.0, 0, 3);
+}
+
+.btn-red:pressed {
+    -fx-scale-x: 0.96;
+    -fx-scale-y: 0.96;
+    -fx-background-color: #e07a95;
+    -fx-effect: null;
+}
+
+/* ═══════════════════════════════════════════════════════
+   LEADERBOARD  –  DARK TABLE
+   ═══════════════════════════════════════════════════════ */
+.dark-table {
+    -fx-background-color: #181825;
+    -fx-control-inner-background: #181825;
+    -fx-table-cell-border-color: #313244;
+    -fx-font-family: 'Cascadia Code', monospace;
+    -fx-font-size: 14px;
+}
+
+/* Remove default outer border */
+.dark-table > .virtual-flow > .clipped-container > .sheet > .table-row-cell {
+    -fx-border-color: transparent;
+}
+
+.dark-table .column-header-background {
+    -fx-background-color: #11111b;
+}
+
+.dark-table .column-header,
+.dark-table .filler {
+    -fx-background-color: #11111b;
+    -fx-border-color: transparent transparent #313244 transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-size: 38;
+}
+
+.dark-table .column-header .label {
+    -fx-text-fill: #89b4fa;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-font-family: 'Segoe UI';
+    -fx-alignment: center-left;
+    -fx-padding: 0 8 0 8;
+}
+
+/* Sort arrow tint */
+.dark-table .column-header .arrow {
+    -fx-background-color: #89b4fa;
+}
+
+.dark-table .table-row-cell {
+    -fx-background-color: #181825;
+    -fx-text-fill: #cdd6f4;
+    -fx-border-color: transparent transparent #23233a transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-cell-size: 40;
+}
+
+.dark-table .table-row-cell:odd {
+    -fx-background-color: #1e1e2e;
+}
+
+.dark-table .table-row-cell:hover {
+    -fx-background-color: #2a2a3e;
+    -fx-cursor: hand;
+}
+
+.dark-table .table-row-cell:selected {
+    -fx-background-color: #45475a;
+}
+
+.dark-table .table-row-cell .table-cell {
+    -fx-text-fill: #cdd6f4;
+    -fx-alignment: center-left;
+    -fx-padding: 0 10 0 10;
+}
+
+/* Highlight the logged-in user's row */
+.current-user-row {
+    -fx-background-color: #1a3a1a !important;
+    -fx-border-color: transparent transparent #a6e3a130 transparent;
+}
+
+.current-user-row .table-cell {
+    -fx-text-fill: #a6e3a1 !important;
+    -fx-font-weight: bold;
+}
+
+/* Rank #1 gold */
+.rank-gold .table-cell {
+    -fx-text-fill: #f0c040;
+    -fx-font-weight: bold;
+}
+
+/* Empty placeholder */
+.dark-table .placeholder .label {
+    -fx-text-fill: #585b70;
+    -fx-font-family: 'Segoe UI';
+    -fx-font-size: 14px;
+}
+
+/* Scrollbar styling inside table */
+.dark-table .scroll-bar:vertical,
+.dark-table .scroll-bar:horizontal {
+    -fx-background-color: #181825;
+}
+
+.dark-table .scroll-bar .thumb {
+    -fx-background-color: #45475a;
+    -fx-background-radius: 4;
+}
+
+.dark-table .scroll-bar .thumb:hover {
+    -fx-background-color: #585b70;
+}
+
+.dark-table .scroll-bar .increment-button,
+.dark-table .scroll-bar .decrement-button {
+    -fx-background-color: #181825;
+    -fx-padding: 3;
+}
+
+.dark-table .scroll-bar .increment-arrow,
+.dark-table .scroll-bar .decrement-arrow {
+    -fx-background-color: #585b70;
+}
+
+/* ═══════════════════════════════════════════════════════
+   MY STATS  –  Stat Cards hover glow
+   ═══════════════════════════════════════════════════════ */
+.stat-card {
+    -fx-background-color: #181825;
+    -fx-background-radius: 12;
+    -fx-border-color: #313244;
+    -fx-border-radius: 12;
+    -fx-border-width: 1;
+    -fx-padding: 20;
+    -fx-cursor: default;
+}
+
+.stat-card:hover {
+    -fx-border-color: #45475a;
+    -fx-effect: dropshadow(gaussian, rgba(137,180,250,0.12), 16, 0.0, 0, 4);
+}

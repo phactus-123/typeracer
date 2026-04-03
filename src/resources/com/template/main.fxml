@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -13,88 +17,114 @@
 <?import javafx.scene.text.TextFlow?>
 
 <AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #1e1e2e;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.template.MainController">
+
+   <!-- ══════════ GLOBAL STYLESHEET ══════════ -->
+   <stylesheets>
+      <URL value="@styles.css" />
+   </stylesheets>
+
    <children>
 
       <!-- ══════════ NAV BAR ══════════ -->
-      <AnchorPane prefHeight="56.0" prefWidth="900.0" style="-fx-background-color: #181825; -fx-border-color: #313244; -fx-border-width: 0 0 1 0;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane minHeight="73.0" prefHeight="73.0" prefWidth="900.0" style="-fx-background-color: #181825; -fx-border-color: #313244; -fx-border-width: 0;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
+
             <!-- Logo icon -->
-            <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="14.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="50.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
                <image><Image url="@../../Images/typing_17816535.png" /></image>
             </ImageView>
 
-            <!-- Nav buttons -->
-            <HBox layoutX="60.0" layoutY="0.0" prefHeight="56.0" spacing="4.0">
+            <!-- Nav buttons row -->
+            <HBox layoutX="0.0" layoutY="0.0" prefHeight="73.0" spacing="0.0" AnchorPane.leftAnchor="120.0">
                <children>
-                  <Button fx:id="button" mnemonicParsing="false" prefHeight="56.0" prefWidth="120.0" style="-fx-background-color: transparent; -fx-text-fill: #cdd6f4; -fx-font-size: 13px; -fx-font-family: 'Segoe UI';" text="Dashboard">
+
+                  <!-- Dashboard -->
+                  <Button fx:id="dashboardButton" defaultButton="true" mnemonicParsing="false" onAction="#handleNavigation" prefHeight="85.0" prefWidth="160.0" styleClass="nav-button" text="Dashboard">
                      <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image><Image url="@../../Images/Home.png" /></image>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="Yu Gothic UI Regular" size="30.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
                   </Button>
-                  <Button fx:id="button" mnemonicParsing="false" prefHeight="56.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-text-fill: #cdd6f4; -fx-font-size: 13px; -fx-font-family: 'Segoe UI';" text="Friends">
+
+                  <!-- LdrBoard -->
+                  <Button fx:id="leaderboardButton" mnemonicParsing="false" onAction="#handleNavigation" prefHeight="85.0" prefWidth="160.0" styleClass="nav-button" text="LeaderBoard">
                      <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image><Image url="@../../Images/People.png" /></image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="56.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-text-fill: #cdd6f4; -fx-font-size: 13px; -fx-font-family: 'Segoe UI';" text="LdrBoard">
-                     <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image><Image url="@../../Images/Leaderboard.png" /></image>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="Yu Gothic UI Regular" size="30.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="56.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-text-fill: #cdd6f4; -fx-font-size: 13px; -fx-font-family: 'Segoe UI';" text="Settings">
+
+                  <!-- MyStats -->
+                  <Button fx:id="myStatsButton" mnemonicParsing="false" onAction="#handleNavigation" prefHeight="85.0" prefWidth="160.0" styleClass="nav-button" text="MyStats">
                      <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image><Image url="@../../Images/Settings.png" /></image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="56.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-text-fill: #cdd6f4; -fx-font-size: 13px; -fx-font-family: 'Segoe UI';" text="MyStats">
-                     <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image><Image url="@../../Images/Statistics.png" /></image>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="Yu Gothic UI Regular" size="30.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="56.0" prefWidth="100.0" style="-fx-background-color: transparent; -fx-text-fill: #cdd6f4; -fx-font-size: 13px; -fx-font-family: 'Segoe UI';" text="About">
+
+                  <!-- About -->
+                  <Button fx:id="aboutButton" mnemonicParsing="false" onAction="#handleNavigation" prefHeight="85.0" prefWidth="160.0" styleClass="nav-button" text="About">
                      <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                            <image><Image url="@../../Images/About.png" /></image>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="Yu Gothic UI Regular" size="30.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
                   </Button>
+
                </children>
             </HBox>
+
          </children>
       </AnchorPane>
 
       <!-- ══════════ STARTUP PANE ══════════ -->
       <Pane fx:id="startupPane" prefHeight="544.0" prefWidth="900.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
          <children>
-            <!-- Hero image centred -->
+
             <ImageView fx:id="WelcomeText" fitHeight="350.0" fitWidth="600.0" layoutX="235.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../Images/Untitled-1.png" />
-               </image>
+               <image><Image url="@../../Images/Untitled-1.png" /></image>
             </ImageView>
 
-            <!-- SIGN UP -->
-            <Button fx:id="signUpButton" layoutX="260.0" layoutY="310.0" mnemonicParsing="false" onAction="#handleUser" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #a6e3a1; -fx-text-fill: #1e1e2e;                            -fx-font-size: 15px; -fx-font-weight: bold;                            -fx-background-radius: 8; -fx-font-family: 'Segoe UI';" text="SIGN UP" />
+            <!-- SIGN UP  (bg-color comes from CSS .btn-green) -->
+            <Button fx:id="signUpButton" layoutX="260.0" layoutY="310.0" mnemonicParsing="false" onAction="#handleUser" prefHeight="50.0" prefWidth="150.0" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';" styleClass="btn-green" text="SIGN UP" />
 
             <!-- LOG IN -->
-            <Button fx:id="logInButton" defaultButton="true" layoutX="490.0" layoutY="310.0" mnemonicParsing="false" onAction="#handleUser" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #89b4fa; -fx-text-fill: #1e1e2e;                            -fx-font-size: 15px; -fx-font-weight: bold;                            -fx-background-radius: 8; -fx-font-family: 'Segoe UI';" text="LOG IN" />
+            <Button fx:id="logInButton" defaultButton="true" layoutX="490.0" layoutY="310.0" mnemonicParsing="false" onAction="#handleUser" prefHeight="50.0" prefWidth="150.0" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';" styleClass="btn-blue" text="LOG IN" />
+
          </children>
       </Pane>
 
       <!-- ══════════ USERNAME / DASHBOARD PANE ══════════ -->
       <Pane fx:id="usernamePane" prefHeight="300.0" prefWidth="500.0" style="-fx-background-color: #181825; -fx-background-radius: 12;                    -fx-border-color: #313244; -fx-border-radius: 12; -fx-border-width: 1;" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="130.0">
          <children>
-            <!-- Stats card content -->
+
             <VBox layoutX="24.0" layoutY="20.0" spacing="10.0">
                <children>
                   <Label fx:id="username" style="-fx-text-fill: #89b4fa; -fx-font-size: 22px; -fx-font-weight: bold; -fx-font-family: 'Cascadia Code';" text="&lt;USERNAME&gt;" />
@@ -103,42 +133,205 @@
                </children>
             </VBox>
 
-            <!-- Action buttons -->
             <HBox layoutX="24.0" layoutY="160.0" spacing="16.0">
                <children>
-                  <Button fx:id="test" mnemonicParsing="false" onAction="#actionButton" prefHeight="48.0" prefWidth="130.0" style="-fx-background-color: #89b4fa; -fx-text-fill: #1e1e2e;                                  -fx-font-size: 15px; -fx-font-weight: bold;                                  -fx-background-radius: 8; -fx-font-family: 'Cascadia Code';" text="TEST" />
-                  <Button fx:id="race" mnemonicParsing="false" onAction="#actionButton" prefHeight="48.0" prefWidth="130.0" style="-fx-background-color: #a6e3a1; -fx-text-fill: #1e1e2e;                                  -fx-font-size: 15px; -fx-font-weight: bold;                                  -fx-background-radius: 8; -fx-font-family: 'Cascadia Code';" text="RACE" />
+                  <Button fx:id="test" mnemonicParsing="false" onAction="#actionButton" prefHeight="48.0" prefWidth="130.0" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-font-family: 'Cascadia Code';" styleClass="btn-blue" text="TEST" />
+                  <Button fx:id="race" mnemonicParsing="false" onAction="#actionButton" prefHeight="48.0" prefWidth="130.0" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-font-family: 'Cascadia Code';" styleClass="btn-green" text="RACE" />
                </children>
             </HBox>
 
             <!-- Logout -->
-            <Button fx:id="race1" layoutX="370.0" layoutY="248.0" mnemonicParsing="false" onAction="#actionButton" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: #f38ba8; -fx-text-fill: #1e1e2e;                            -fx-font-size: 13px; -fx-font-weight: bold;                            -fx-background-radius: 8; -fx-font-family: 'Cascadia Code';" text="LOGOUT" />
+            <Button fx:id="logoutButton" layoutX="370.0" layoutY="248.0" mnemonicParsing="false" onAction="#actionButton" prefHeight="38.0" prefWidth="106.0" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-font-family: 'Cascadia Code';" styleClass="btn-red" text="LOGOUT" />
+
          </children>
       </Pane>
 
-                              <!-- ══════════ TYPING PANE ══════════ -->
+      <!-- ══════════ TYPING PANE ══════════ -->
       <Pane fx:id="typingPane" prefHeight="544.0" prefWidth="900.0" style="-fx-background-color: #1e1e2e;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
          <children>
 
-                                    <!-- WPM label -->
             <Label fx:id="wpmLabel" layoutX="390.0" layoutY="80.0" prefHeight="44.0" prefWidth="120.0" style="-fx-text-fill: #fab387; -fx-font-size: 24px;                           -fx-font-weight: bold; -fx-font-family: 'Cascadia Code';" text="WPM: " />
 
-                                    <!-- Typing block container -->
-            <VBox layoutX="80.0" layoutY="140.0" prefHeight="220.0" prefWidth="740.0" style="-fx-background-color: #181825; -fx-background-radius: 10;                          -fx-padding: 14;                          -fx-border-color: #313244; -fx-border-radius: 10; -fx-border-width: 1;">
+            <VBox layoutX="80.0" layoutY="140.0" prefHeight="220.0" prefWidth="740.0" style="-fx-background-color: #181825; -fx-background-radius: 10;                          -fx-padding: 14; -fx-border-color: #313244;                          -fx-border-radius: 10; -fx-border-width: 1;">
                <children>
                   <TextFlow fx:id="typingBlock" prefHeight="190.0" prefWidth="712.0" />
                </children>
             </VBox>
 
-                                    <!-- Input field -->
             <TextArea fx:id="currentWord" layoutX="310.0" layoutY="390.0" maxHeight="52.0" minHeight="52.0" prefHeight="52.0" prefWidth="280.0" style="-fx-control-inner-background: #313244; -fx-text-fill: #cdd6f4;                              -fx-font-size: 18px; -fx-background-radius: 8;                              -fx-font-family: monospace;                              -fx-border-color: #585b70; -fx-border-radius: 8;">
-               <font>
-                  <Font name="Segoe UI" size="18.0" />
-               </font>
+               <font><Font name="Segoe UI" size="18.0" /></font>
             </TextArea>
 
-                                    <!-- Stop button -->
-            <Button fx:id="stopButton" layoutX="396.0" layoutY="462.0" mnemonicParsing="false" onAction="#actionButton" prefHeight="44.0" prefWidth="108.0" style="-fx-background-color: #f38ba8; -fx-text-fill: #1e1e2e;                            -fx-font-size: 15px; -fx-font-weight: bold;                            -fx-background-radius: 8; -fx-font-family: 'Segoe UI';" text="STOP" />
+            <Button fx:id="stopButton" layoutX="396.0" layoutY="462.0" mnemonicParsing="false" onAction="#actionButton" prefHeight="44.0" prefWidth="108.0" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';" styleClass="btn-red" text="STOP" />
+
+         </children>
+      </Pane>
+
+      <!-- ══════════ LEADERBOARD PANE ══════════ -->
+      <Pane fx:id="leaderboardPane" disable="true" prefHeight="527.0" prefWidth="900.0" style="-fx-background-color: #1e1e2e;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="73.0">
+         <children>
+
+            <VBox layoutX="40.0" layoutY="24.0" prefHeight="510.0" prefWidth="820.0" spacing="14.0">
+               <children>
+
+                  <!-- Header -->
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <Label style="-fx-font-size: 24px; -fx-font-weight: bold;                                       -fx-text-fill: #f0c040;                                       -fx-font-family: 'Cascadia Code';" text="🏆  Leaderboard" />
+                     </children>
+                  </HBox>
+
+                  <!-- Sub-header -->
+                  <Label style="-fx-text-fill: #585b70; -fx-font-size: 12px; -fx-font-family: 'Segoe UI';" text="Ranked by average WPM  ·  your row is highlighted" />
+
+                  <!-- Table -->
+                  <TableView fx:id="leaderboardTable" prefHeight="430.0" prefWidth="820.0" styleClass="dark-table">
+                     <columns>
+                        <TableColumn fx:id="rankCol" maxWidth="55" minWidth="55" prefWidth="55" text="#" />
+                        <TableColumn fx:id="nameCol" prefWidth="220" text="Player" />
+                        <TableColumn fx:id="wpmCol" prefWidth="160" text="Avg WPM" />
+                        <TableColumn fx:id="accCol" prefWidth="190" text="Avg Accuracy" />
+                        <TableColumn fx:id="testsCol" prefWidth="150" text="Tests Taken" />
+                     </columns>
+                  </TableView>
+
+               </children>
+            </VBox>
+
+         </children>
+      </Pane>
+
+      <!-- ══════════ MY STATS PANE ══════════ -->
+      <Pane fx:id="myStatsPane" disable="true" prefHeight="544.0" prefWidth="900.0" style="-fx-background-color: #1e1e2e;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="73.0">
+         <children>
+
+            <VBox layoutX="40.0" layoutY="28.0" prefWidth="820.0" spacing="20.0">
+               <children>
+
+                  <!-- Title -->
+                  <Label style="-fx-font-size: 24px; -fx-font-weight: bold;                                 -fx-text-fill: #cba6f7; -fx-font-family: 'Cascadia Code';" text="📊  My Statistics" />
+
+                  <!-- Username -->
+                  <Label fx:id="statUsernameLabel" style="-fx-font-size: 17px; -fx-text-fill: #89b4fa;                                 -fx-font-family: 'Cascadia Code';" text="&lt;USERNAME&gt;" />
+
+                  <!-- ── Three stat cards ── -->
+                  <HBox spacing="20.0">
+                     <children>
+
+                        <!-- Tests Taken -->
+                        <VBox prefHeight="115.0" prefWidth="235.0" spacing="8.0" style="-fx-background-color: #181825; -fx-background-radius: 12;                                      -fx-border-color: #313244; -fx-border-radius: 12;                                      -fx-border-width: 1; -fx-padding: 18;">
+                           <children>
+                              <Label style="-fx-text-fill: #6c7086; -fx-font-size: 10px;                                             -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;" text="TESTS TAKEN" />
+                              <Label fx:id="statTestCount" style="-fx-text-fill: #89b4fa; -fx-font-size: 42px;                                             -fx-font-weight: bold; -fx-font-family: 'Cascadia Code';" text="0" />
+                           </children>
+                        </VBox>
+
+                        <!-- Avg WPM -->
+                        <VBox prefHeight="115.0" prefWidth="235.0" spacing="8.0" style="-fx-background-color: #181825; -fx-background-radius: 12;                                      -fx-border-color: #313244; -fx-border-radius: 12;                                      -fx-border-width: 1; -fx-padding: 18;">
+                           <children>
+                              <Label style="-fx-text-fill: #6c7086; -fx-font-size: 10px;                                             -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;" text="AVG WPM" />
+                              <Label fx:id="statAvgWpm" style="-fx-text-fill: #a6e3a1; -fx-font-size: 42px;                                             -fx-font-weight: bold; -fx-font-family: 'Cascadia Code';" text="0" />
+                           </children>
+                        </VBox>
+
+                        <!-- Avg Accuracy -->
+                        <VBox prefHeight="115.0" prefWidth="235.0" spacing="8.0" style="-fx-background-color: #181825; -fx-background-radius: 12;                                      -fx-border-color: #313244; -fx-border-radius: 12;                                      -fx-border-width: 1; -fx-padding: 18;">
+                           <children>
+                              <Label style="-fx-text-fill: #6c7086; -fx-font-size: 10px;                                             -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;" text="AVG ACCURACY" />
+                              <Label fx:id="statAvgAccuracy" style="-fx-text-fill: #fab387; -fx-font-size: 42px;                                             -fx-font-weight: bold; -fx-font-family: 'Cascadia Code';" text="0%" />
+                           </children>
+                        </VBox>
+
+                     </children>
+                  </HBox>
+
+                  <!-- ── Last session panel ── -->
+                  <VBox prefWidth="725.0" spacing="10.0" style="-fx-background-color: #181825; -fx-background-radius: 12;                                -fx-border-color: #313244; -fx-border-radius: 12;                                -fx-border-width: 1; -fx-padding: 18;">
+                     <children>
+                        <Label style="-fx-text-fill: #6c7086; -fx-font-size: 10px;                                       -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;" text="LAST SESSION" />
+                        <HBox alignment="CENTER_LEFT" spacing="48.0">
+                           <children>
+                              <VBox spacing="4.0">
+                                 <Label style="-fx-text-fill: #6c7086; -fx-font-size: 12px; -fx-font-family: 'Segoe UI';" text="WPM" />
+                                 <Label fx:id="statLastWpm" style="-fx-text-fill: #cdd6f4; -fx-font-size: 26px;                                                -fx-font-family: 'Cascadia Code'; -fx-font-weight: bold;" text="—" />
+                              </VBox>
+                              <VBox spacing="4.0">
+                                 <Label style="-fx-text-fill: #6c7086; -fx-font-size: 12px; -fx-font-family: 'Segoe UI';" text="ACCURACY" />
+                                 <Label fx:id="statLastAccuracy" style="-fx-text-fill: #cdd6f4; -fx-font-size: 26px;                                                -fx-font-family: 'Cascadia Code'; -fx-font-weight: bold;" text="—" />
+                              </VBox>
+                              <VBox spacing="4.0">
+                                 <Label style="-fx-text-fill: #6c7086; -fx-font-size: 12px; -fx-font-family: 'Segoe UI';" text="CORRECT CHARS" />
+                                 <Label fx:id="statLastChars" style="-fx-text-fill: #cdd6f4; -fx-font-size: 26px;                                                -fx-font-family: 'Cascadia Code'; -fx-font-weight: bold;" text="—" />
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+
+                  <!-- Hint / empty state -->
+                  <Label fx:id="statHint" style="-fx-text-fill: #45475a; -fx-font-size: 13px; -fx-font-family: 'Segoe UI';" text="✨  Complete a typing test to start tracking your progress!" />
+
+               </children>
+            </VBox>
+
+         </children>
+      </Pane>
+
+      <!-- ══════════ ABOUT PANE ══════════ -->
+      <Pane fx:id="aboutPane" disable="true" prefHeight="544.0" prefWidth="900.0" style="-fx-background-color: #1e1e2e;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="73.0">
+         <children>
+
+            <VBox layoutX="60.0" layoutY="36.0" prefWidth="780.0" spacing="24.0">
+               <children>
+
+                  <!-- Title -->
+                  <Label style="-fx-font-size: 26px; -fx-font-weight: bold;                                 -fx-text-fill: #89b4fa; -fx-font-family: 'Cascadia Code';" text="ℹ️  About Us" />
+
+                  <!-- Divider line -->
+                  <Pane prefHeight="1.0" prefWidth="780.0" style="-fx-background-color: #313244;" />
+
+                  <!-- Authors card -->
+                  <VBox prefWidth="780.0" spacing="6.0" style="-fx-background-color: #181825; -fx-background-radius: 12;                                -fx-border-color: #313244; -fx-border-radius: 12;                                -fx-border-width: 1; -fx-padding: 20;">
+                     <children>
+                        <Label style="-fx-text-fill: #6c7086; -fx-font-size: 10px;                                       -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;" text="THE DEVELOPERS" />
+                        <HBox alignment="CENTER_LEFT" spacing="40.0">
+                           <children>
+                              <VBox spacing="4.0">
+                                 <Label style="-fx-text-fill: #cba6f7; -fx-font-size: 17px;                                                -fx-font-weight: bold; -fx-font-family: 'Cascadia Code';" text="Shahnewaz Hossain" />
+                                 <Label style="-fx-text-fill: #6c7086; -fx-font-size: 12px;                                                -fx-font-family: 'Segoe UI';" text="Roll: 2405005  ·  CSE, BUET" />
+                              </VBox>
+                              <VBox spacing="4.0">
+                                 <Label style="-fx-text-fill: #cba6f7; -fx-font-size: 17px;                                                -fx-font-weight: bold; -fx-font-family: 'Cascadia Code';" text="Ahnaf Farreed" />
+                                 <Label style="-fx-text-fill: #6c7086; -fx-font-size: 12px;                                                -fx-font-family: 'Segoe UI';" text="Roll: 2405024  ·  CSE, BUET" />
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+
+                  <!-- About text card -->
+                  <VBox prefWidth="780.0" spacing="14.0" style="-fx-background-color: #181825; -fx-background-radius: 12;                                -fx-border-color: #313244; -fx-border-radius: 12;                                -fx-border-width: 1; -fx-padding: 20;">
+                     <children>
+                        <Label style="-fx-text-fill: #6c7086; -fx-font-size: 10px;                                       -fx-font-family: 'Segoe UI'; -fx-font-weight: bold;" text="ABOUT THIS PROJECT" />
+
+                        <Label prefWidth="740.0" style="-fx-text-fill: #cdd6f4; -fx-font-size: 14px;                                       -fx-font-family: 'Segoe UI'; -fx-line-spacing: 3;" text="This project has been developed as part of our CSE 108 course and is entirely non-commercial. Our goal in creating TypeRacer is to help students improve their typing speed, accuracy, and overall efficiency in a simple and engaging way." wrapText="true" />
+
+                        <Label prefWidth="740.0" style="-fx-text-fill: #cdd6f4; -fx-font-size: 14px;                                       -fx-font-family: 'Segoe UI'; -fx-line-spacing: 3;" text="Built using JavaFX 21, the application focuses on providing a smooth and interactive typing experience. Through this project, we aimed to combine practical software development skills with a tool that offers real value to students." wrapText="true" />
+
+                        <Label prefWidth="740.0" style="-fx-text-fill: #a6e3a1; -fx-font-size: 14px;                                       -fx-font-family: 'Segoe UI'; -fx-font-style: italic; -fx-line-spacing: 3;" text="We believe consistent practice is key to mastery, and TypeRacer is designed to make that journey both effective and enjoyable." wrapText="true" />
+                     </children>
+                  </VBox>
+
+                  <!-- Course badge -->
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <Label style="-fx-text-fill: #45475a; -fx-font-size: 12px;                                       -fx-font-family: 'Segoe UI';" text="📚  CSE 108  ·  JavaFX 21  ·  BUET" />
+                     </children>
+                  </HBox>
+
+               </children>
+            </VBox>
+
          </children>
       </Pane>
 
