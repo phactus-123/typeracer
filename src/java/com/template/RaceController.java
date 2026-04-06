@@ -186,6 +186,12 @@ public class RaceController {
             if (!who.equals(Main.AppState.currentUser)) {
                 Platform.runLater(() -> handleOpponentFinish(who, wpm));
             }
+
+        } else if (msg.startsWith("DISCONNECT:")) {
+            String who = msg.substring("DISCONNECT:".length());
+            if (!who.equals(Main.AppState.currentUser)) {
+                Platform.runLater(() -> handleOpponentDisconnect(who));
+            }
         }
     }
 
@@ -295,6 +301,36 @@ public class RaceController {
         if (!resultShown) {
             resultShown = true;
             showResult(false, finisher, finalWpm);
+        }
+    }
+
+    private void handleOpponentDisconnect(String who) {
+        if (raceFinished || resultShown) return;
+
+        opponentProgressLabel.setText(opponentName + ": disconnected");
+        opponentWpmLabel.setText("WPM: —");
+
+        if (!raceStarted) {
+            // Disconnected before the race even began — just go back to lobby state
+            resultLabel.setVisible(true);
+            resultLabel.setText(who + " disconnected before the race started.");
+            resultLabel.setStyle("-fx-text-fill: gray; -fx-font-size: 16px;");
+            racePane.setDisable(true);
+            inputField.setDisable(true);
+            stopWpmTimer();
+        } else {
+            // Disconnected mid-race — the remaining player wins by default
+            resultShown = true;
+            raceFinished = true;
+            inputField.setDisable(true);
+            stopWpmTimer();
+
+            int currentWpm = calcWpm();
+            myWpmLabel.setText("WPM: " + currentWpm);
+
+            resultLabel.setVisible(true);
+            resultLabel.setText("🏆 " + who + " left the race. You win! WPM: " + currentWpm);
+            resultLabel.setStyle("-fx-text-fill: green; -fx-font-size: 20px; -fx-font-weight: bold;");
         }
     }
 

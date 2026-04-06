@@ -15,25 +15,34 @@ import java.io.InputStream;
 
 public class Main extends Application
 {
-    private static final String MONO_FONT_PATH = "/fonts/CascadiaCode-Regular.ttf";
+    private static final String MONO_FONT_PATH     = "/fonts/CascadiaCode-Regular.ttf";
     private static final String MONO_FONT_FALLBACK = "Consolas";
 
     private static boolean monoFontLoaded = false;
-    private static String monoFontFamily = MONO_FONT_FALLBACK;
+    private static String  monoFontFamily = MONO_FONT_FALLBACK;
 
     @Override
     public void start(Stage stage) throws Exception
     {
         stage.setTitle("TypeRacer");
         stage.setScene(loadScene("main.fxml"));
+
+        // Remove session when the user closes the window (X button or Alt+F4)
+        stage.setOnCloseRequest(e -> LoginController.removeSession(AppState.currentUser));
+
         stage.show();
+    }
+
+    /** Called by JavaFX when the application shuts down — catches all exit paths. */
+    @Override
+    public void stop() {
+        LoginController.removeSession(AppState.currentUser);
     }
 
     public static void switchScene(String fxmlFile, ActionEvent event) {
         try {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(loadScene(fxmlFile));
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,12 +67,9 @@ public class Main extends Application
 
     private static void ensureMonoFontLoaded() {
         if (monoFontLoaded) return;
-
         monoFontLoaded = true;
-
         try (InputStream stream = Main.class.getResourceAsStream(MONO_FONT_PATH)) {
             if (stream == null) return;
-
             Font font = Font.loadFont(stream, 16);
             if (font != null && font.getFamily() != null && !font.getFamily().isBlank()) {
                 monoFontFamily = font.getFamily();
@@ -74,13 +80,13 @@ public class Main extends Application
     }
 
     public class AppState {
-        public static boolean isLoggedIn = false;
-        public static boolean testOn = false;
-        public static String currentUser = null;
+        public static boolean    isLoggedIn  = false;
+        public static boolean    testOn      = false;
+        public static String     currentUser = null;
 
-        public static boolean isHost = false;
-        public static GameServer server = null;
-        public static GameClient client = null;
+        public static boolean    isHost      = false;
+        public static GameServer server      = null;
+        public static GameClient client      = null;
     }
 
     public static void main(String[] args)

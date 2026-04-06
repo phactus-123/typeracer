@@ -7,63 +7,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane"
-            maxHeight="-Infinity" maxWidth="-Infinity"
-            minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="600.0" prefWidth="900.0"
-            style="-fx-background-color: #1e1e2e;"
-            xmlns="http://javafx.com/javafx/25"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.template.LoginController">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #1e1e2e;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.template.LoginController">
    <children>
 
-      <VBox alignment="CENTER" spacing="20.0"
-            prefWidth="380.0" prefHeight="280.0"
-            layoutX="260.0" layoutY="160.0"
-            style="-fx-background-color: #181825;
-                   -fx-background-radius: 14;
-                   -fx-border-color: #313244;
-                   -fx-border-radius: 14;
-                   -fx-border-width: 1;
-                   -fx-padding: 40 32 40 32;">
+      <VBox alignment="CENTER" layoutX="260.0" layoutY="160.0" prefHeight="280.0" prefWidth="380.0" spacing="20.0" style="-fx-background-color: #181825;                    -fx-background-radius: 14;                    -fx-border-color: #313244;                    -fx-border-radius: 14;                    -fx-border-width: 1;                    -fx-padding: 40 32 40 32;">
          <children>
 
-            <Label text="Enter your username"
-                   style="-fx-text-fill: #cdd6f4; -fx-font-size: 22px;
-                          -fx-font-weight: bold; -fx-font-family: 'Segoe UI';"/>
+            <Label fx:id="usernameLabel" style="-fx-text-fill: #cdd6f4; -fx-font-size: 22px;                           -fx-font-weight: bold; -fx-font-family: 'Segoe UI';" text="Enter your username" />
 
-            <TextField fx:id="username"
-                       onAction="#getUserInfo"
-                       promptText="username…"
-                       prefHeight="42.0" prefWidth="300.0"
-                       style="-fx-control-inner-background: #313244;
-                              -fx-text-fill: #cdd6f4;
-                              -fx-prompt-text-fill: #585b70;
-                              -fx-font-size: 15px;
-                              -fx-background-radius: 8;
-                              -fx-border-color: #585b70;
-                              -fx-border-radius: 8;
-                              -fx-font-family: 'Segoe UI';">
-               <font><Font name="Segoe UI" size="15.0"/></font>
+            <TextField fx:id="username" onAction="#getUserInfo" prefHeight="42.0" prefWidth="300.0" promptText="username…" style="-fx-control-inner-background: #313244;                               -fx-text-fill: #cdd6f4;                               -fx-prompt-text-fill: #585b70;                               -fx-font-size: 15px;                               -fx-background-radius: 8;                               -fx-border-color: #585b70;                               -fx-border-radius: 8;                               -fx-font-family: 'Segoe UI';">
+               <font><Font name="Segoe UI" size="15.0" /></font>
             </TextField>
 
-            <Button fx:id="enter"
-                    mnemonicParsing="false" onAction="#getUserInfo"
-                    prefHeight="46.0" prefWidth="300.0" text="ENTER"
-                    style="-fx-background-color: #89b4fa; -fx-text-fill: #1e1e2e;
-                           -fx-font-size: 15px; -fx-font-weight: bold;
-                           -fx-background-radius: 8; -fx-font-family: 'Segoe UI';"/>
+            <Button fx:id="enter" mnemonicParsing="false" onAction="#getUserInfo" prefHeight="46.0" prefWidth="300.0" style="-fx-background-color: #89b4fa; -fx-text-fill: #1e1e2e;                            -fx-font-size: 15px; -fx-font-weight: bold;                            -fx-background-radius: 8; -fx-font-family: 'Segoe UI';" text="ENTER" />
 
          </children>
       </VBox>
 
-      <Button fx:id="backButton"
-              layoutX="32.0" layoutY="548.0"
-              mnemonicParsing="false" onAction="#getUserInfo"
-              prefHeight="36.0" prefWidth="80.0" text="← Back"
-              style="-fx-background-color: #313244; -fx-text-fill: #cdd6f4;
-                     -fx-font-size: 13px; -fx-background-radius: 6;
-                     -fx-font-family: 'Segoe UI';"/>
+      <Button fx:id="backButton" layoutX="32.0" layoutY="548.0" mnemonicParsing="false" onAction="#getUserInfo" prefHeight="36.0" prefWidth="80.0" style="-fx-background-color: #313244; -fx-text-fill: #cdd6f4;                      -fx-font-size: 13px; -fx-background-radius: 6;                      -fx-font-family: 'Segoe UI';" text="← Back" />
 
    </children>
 </AnchorPane>
